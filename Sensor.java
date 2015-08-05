@@ -7,7 +7,7 @@ public class Sensor
 
 	public interface compass
 	{
-		// Test 
+		// Test
 		private double absoluteZero;
 
 		private double heading;
