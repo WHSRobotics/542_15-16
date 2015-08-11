@@ -1,0 +1,126 @@
+package com.qualcomm.ftcrobotcontroller.opmodes;
+
+/**
+ * Created by DanielWang on 8/9/15.
+ */
+
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+public class GhettoBotTeleOp extends OpMode{
+    double powerLeft = 0.5;
+    double powerRight = 0.5;
+    double positionServo = 0.5;
+    DcMotor motorRight;
+    //DcMotor motorRight2;
+    DcMotor motorLeft;
+    //DcMotor motorLeft2;
+    DcMotor intakeLeft;
+    DcMotor intakeRight;
+    DcMotor flyWheelsLeft;
+    DcMotor flyWheelsRight;
+    Servo shooter;
+
+    public void init()
+    {
+        motorRight = hardwareMap.dcMotor.get("motor_1");
+        //motorRight2 = hardwareMap.dcMotor.get("motor_2");
+        motorLeft = hardwareMap.dcMotor.get("motor_3");
+        //motorLeft2 = hardwareMap.dcMotor.get("motor_4");
+        intakeLeft = hardwareMap.dcMotor.get("motor_5");
+        intakeRight = hardwareMap.dcMotor.get("motor_6");
+        flyWheelsLeft = hardwareMap.dcMotor.get("motor_7");
+        flyWheelsRight = hardwareMap.dcMotor.get("motor_8");
+        shooter = hardwareMap.servo.get("servo_1");
+        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        //motorLeft2.setDirection(DcMotor.Direction.REVERSE);
+        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
+        flyWheelsLeft.setDirection(DcMotor.Direction.REVERSE);
+    }
+
+    public void loop()
+    {
+        float right = gamepad1.right_stick_y;
+        float left = gamepad1.left_stick_y;
+
+        motorRight.setPower(right);
+        //motorRight2.setPower(right);
+        motorLeft.setPower(left);
+        //motorLeft2.setPower(left);
+        /*
+        if(gamepad1.y)
+        {
+            powerLeft = powerLeft + 0.1;
+            powerRight = powerRight + 0.1;
+        }
+        else if(gamepad1.x)
+        {
+            powerLeft = powerLeft - 0.1;
+            powerRight = powerRight - 0.1;
+
+        }
+        else
+        {
+            powerLeft = powerLeft;
+            powerRight = powerRight;
+        }
+        */
+        if(gamepad1.right_bumper) {
+            intakeLeft.setPower(powerLeft);
+            intakeRight.setPower(powerRight);
+        }
+        else if(gamepad1.left_bumper)
+        {
+            intakeLeft.setPower(-powerLeft);
+            intakeRight.setPower(-powerRight);
+        }
+        else {
+            intakeLeft.setPower(0.0);
+            intakeRight.setPower(0.0);
+        }
+        if(gamepad2.a)
+        {
+            flyWheelsRight.setPower(-1.0);
+            flyWheelsLeft.setPower(-1.0);
+        }
+        else if(gamepad2.b)
+        {
+            flyWheelsRight.setPower(-0.75);
+            flyWheelsLeft.setPower(-0.75);
+        }
+        else if(gamepad2.x)
+        {
+            flyWheelsRight.setPower(-0.5);
+            flyWheelsLeft.setPower(-0.5);
+        }
+        else if(gamepad2.y)
+        {
+            flyWheelsRight.setPower(-0.25);
+            flyWheelsLeft.setPower(-0.25);
+        }
+        else
+        {
+            flyWheelsRight.setPower(0.0);
+            flyWheelsLeft.setPower(0.0);
+        }
+        if(gamepad2.right_bumper)
+        {
+            positionServo = 0.9;
+            shooter.setPosition(positionServo);
+        }
+        else
+        {
+            positionServo = 0.5;
+            shooter.setPosition(positionServo);
+        }
+
+        telemetry.addData("servo", "servo:  " + String.format("%.2f", positionServo));
+        //telemetry.addData("flywheelrightt", "flywheelright:  " + String.format("%.2f", powerRight));
+    }
+
+    public void stop()
+    {
+
+    }
+}
