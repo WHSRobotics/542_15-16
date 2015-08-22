@@ -9,9 +9,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class GhettoBotTeleOp extends OpMode{
-    double powerLeft = 0.5;
-    double powerRight = 0.5;
+    double powerLeft = 1.0;     // was 0.5
+    double powerRight = 1.0;    // was 0.5
+    double powerUp = -0.001;    //Is in increments of ten-thousandths so to no make too much of a change
+    double powerDown = 0.001;
+    double flyWheelPower;
     double positionServo = 0.5;
+    boolean powerDownBool;
     DcMotor motorRight;
     //DcMotor motorRight2;
     DcMotor motorLeft;
@@ -37,73 +41,303 @@ public class GhettoBotTeleOp extends OpMode{
         //motorLeft2.setDirection(DcMotor.Direction.REVERSE);
         intakeLeft.setDirection(DcMotor.Direction.REVERSE);
         flyWheelsLeft.setDirection(DcMotor.Direction.REVERSE);
+        powerDownBool = false;
+
+    }
+    // The ramp up and downs probably didn't work because of previously added while loops
+
+    public void motorPowerUp()
+    {
+        /*
+        if(powerUp > flyWheelPower)
+        {
+            if(flyWheelPower == -0.9)
+            {
+                if(powerUp <= -0.9)
+                {
+                    //flyWheelPower = -1.0;
+                    flyWheelsRight.setPower(flyWheelPower);
+                    flyWheelsLeft.setPower(flyWheelPower);
+                }
+            }
+            else
+            {
+                flyWheelsRight.setPower(flyWheelPower);
+                flyWheelsLeft.setPower(flyWheelPower);
+                powerUp = powerUp - 0.001;
+            }
+        }
+        else if(powerUp <= flyWheelPower)
+        {
+            flyWheelsRight.setPower(flyWheelPower);
+            flyWheelsLeft.setPower(flyWheelPower);
+        }
+        */
+        if(powerDownBool == true)
+        {
+            flyWheelPower = -0.1;
+        }
+        else
+        {
+        }
+        if(flyWheelPower > -0.9)
+        {
+            flyWheelsRight.setPower(flyWheelPower);
+            flyWheelsLeft.setPower(flyWheelPower);
+            flyWheelPower = flyWheelPower + powerUp;
+        }
+        else
+        {
+            flyWheelsRight.setPower(flyWheelPower);
+            flyWheelsLeft.setPower(flyWheelPower);
+        }
     }
 
+    public void motorPowerDown()
+    {
+        if(flyWheelPower < 0.0)
+        {
+
+            //flyWheelsRight.setPower(flyWheelPower);
+            //flyWheelsLeft.setPower(flyWheelPower);
+            //flyWheelPower = flyWheelPower + powerDown;
+            if(flyWheelPower >= 0.0)
+            {
+                flyWheelsRight.setPower(0.0);
+                flyWheelsLeft.setPower(0.0);
+            }
+            else
+            {
+                flyWheelsRight.setPower(flyWheelPower);
+                flyWheelsLeft.setPower(flyWheelPower);
+                flyWheelPower = flyWheelPower + powerDown;
+            }
+
+        }
+        else
+        {
+            flyWheelPower = 0.0;
+            flyWheelsRight.setPower(flyWheelPower);
+            flyWheelsLeft.setPower(flyWheelPower);
+        }
+        if(flyWheelPower == 0.0)
+        {
+            powerDownBool = true;
+        }
+        else if(flyWheelPower != 0.0)
+        {
+            powerDownBool = false;
+        }
+    }
+/*
+    public void flyWheels()
+    {
+        if(gamepad2.a)
+        {
+            flyWheelPower = -0.9;
+            //motorPowerUp();
+            flyWheelsRight.setPower(flyWheelPower);
+            flyWheelsLeft.setPower(flyWheelPower);
+        }
+        else if(gamepad2.b)
+        {
+            flyWheelPower = -0.75;
+            //motorPowerUp();
+            flyWheelsRight.setPower(flyWheelPower);
+            flyWheelsLeft.setPower(flyWheelPower);
+        }
+        else if(gamepad2.x)
+        {
+            flyWheelPower = -0.3;
+            //motorPowerUp();
+            flyWheelsRight.setPower(flyWheelPower);
+            flyWheelsLeft.setPower(flyWheelPower);
+        }
+        else if(gamepad2.y)
+        {
+            flyWheelPower = 0.0;
+            flyWheelsRight.setPower(flyWheelPower);
+            flyWheelsLeft.setPower(flyWheelPower);
+        }
+        if(!gamepad2.x || !gamepad2.x || !gamepad2.b)
+        {
+            if(!gamepad2.x)
+            {
+                flyWheelPower = -0.3;
+            }
+            else if(!gamepad2.b)
+            {
+                flyWheelPower = -0.5;
+            }
+            else if(!gamepad2.x)
+            {
+                flyWheelPower = -0.9;
+            }
+            motorPowerDown();
+        }
+    }*/
     public void loop()
     {
         float right = gamepad1.right_stick_y;
         float left = gamepad1.left_stick_y;
 
-        motorRight.setPower(right);
-        //motorRight2.setPower(right);
-        motorLeft.setPower(left);
-        //motorLeft2.setPower(left);
-        /*
-        if(gamepad1.y)
-        {
-            powerLeft = powerLeft + 0.1;
-            powerRight = powerRight + 0.1;
-        }
-        else if(gamepad1.x)
-        {
-            powerLeft = powerLeft - 0.1;
-            powerRight = powerRight - 0.1;
+        // Original Code for drive train
 
+        motorRight.setPower(-left);
+        //motorRight2.setPower(right);
+        motorLeft.setPower(-right);
+        //motorLeft2.setPower(left);
+
+
+        //Test 1 code for drive train // fail
+        //Goal is to be able to turn move forward as well as turn at the same time instead of
+        //stopping and changing direction
+        /*
+        if(right > 0 || right < 0)
+        {
+            motorLeft.setPower(-right);
         }
         else
         {
-            powerLeft = powerLeft;
-            powerRight = powerRight;
+            motorLeft.setPower(0.0);
+        }
+        if(left > 0 || left < 0)
+        {
+            motorRight.setPower(-left);
+        }
+        else
+        {
+            motorRight.setPower(0.0);
         }
         */
+
+        //Test 2 code for drive train
+        /*
+        if(right > 0 || right < 0)
+        {
+            if(left > 0 || left < 0)
+            {
+                motorLeft.setPower(-right);
+                motorRight.setPower(-left);
+            }
+            else
+            {
+                motorLeft.setPower(-right);
+            }
+        }
+        else if(left > 0 || left < 0)
+        {
+            if(right > 0 || right < 0)
+            {
+                motorRight.setPower(-left);
+                motorLeft.setPower(-right);
+            }
+            else
+            {
+                motorRight.setPower(-left);
+            }
+        }
+        else
+        {
+            motorLeft.setPower(0.0);
+            motorRight.setPower(0.0);
+        }
+        */
+        // Test3
+        /*
+        if(right > 0 && left > 0)
+        {
+            motorRight.setPower(-left);
+            motorLeft.setPower(-right);
+
+        }
+        else if(right > 0.13 && left < 0.13)
+        {
+            motorRight.setPower(-left);
+            motorLeft.setPower(-right);
+        }
+        else if(right < 0.13 && left > 0.13)
+        {
+            motorRight.setPower(-left);
+            motorLeft.setPower(-right);
+        }
+        else if(right < 0.13 && left < 0.13)
+        {
+            motorRight.setPower(-left);
+            motorLeft.setPower(-right);
+        }
+        else
+        {
+            motorRight.setPower(0.0);
+            motorLeft.setPower(0.0);
+        }
+        */
+
         if(gamepad1.right_bumper) {
             intakeLeft.setPower(powerLeft);
             intakeRight.setPower(powerRight);
         }
-        else if(gamepad1.left_bumper)
+        else if(gamepad1.right_trigger == 1.0)
         {
             intakeLeft.setPower(-powerLeft);
             intakeRight.setPower(-powerRight);
         }
-        else {
+        else
+        {
             intakeLeft.setPower(0.0);
             intakeRight.setPower(0.0);
         }
+        //Shooter
+        //flyWheels();
+        /*
         if(gamepad2.a)
         {
-            flyWheelsRight.setPower(-1.0);
-            flyWheelsLeft.setPower(-1.0);
+            //flyWheelPower = -0.9;
+            motorPowerUp();
+            //flyWheelsRight.setPower(flyWheelPower);
+            //flyWheelsLeft.setPower(flyWheelPower);
         }
         else if(gamepad2.b)
         {
-            flyWheelsRight.setPower(-0.75);
-            flyWheelsLeft.setPower(-0.75);
+            //flyWheelPower = -0.75;
+            motorPowerUp();
+            //flyWheelsRight.setPower(flyWheelPower);
+            //flyWheelsLeft.setPower(flyWheelPower);
         }
-        else if(gamepad2.x)
+        */
+        if(gamepad2.x)
         {
-            flyWheelsRight.setPower(-0.5);
-            flyWheelsLeft.setPower(-0.5);
+            //flyWheelPower = -0.3;
+            motorPowerUp();
+            //flyWheelsRight.setPower(flyWheelPower);
+            //flyWheelsLeft.setPower(flyWheelPower);
         }
+        else if(gamepad2.y)
+        {
+            motorPowerDown();
+        }
+        /*
+        else if(!gamepad2.b)
+        {
+            flyWheelPower = -0.5;
+            //motorPowerDown();
+        }
+        else if(!gamepad2.x)
+        {
+            flyWheelPower = -0.9;
+            //motorPowerDown();
+        }
+        /*
         else if(gamepad2.y)
         {
             flyWheelsRight.setPower(-0.25);
             flyWheelsLeft.setPower(-0.25);
         }
-        else
-        {
-            flyWheelsRight.setPower(0.0);
-            flyWheelsLeft.setPower(0.0);
-        }
+        */
+
+
+
+        //Drops balls into the flywheels
         if(gamepad2.right_bumper)
         {
             positionServo = 0.9;
@@ -114,9 +348,13 @@ public class GhettoBotTeleOp extends OpMode{
             positionServo = 0.5;
             shooter.setPosition(positionServo);
         }
+        // End of shooter code
 
+
+        //Displays various variables on the phone
         telemetry.addData("servo", "servo:  " + String.format("%.2f", positionServo));
-        //telemetry.addData("flywheelrightt", "flywheelright:  " + String.format("%.2f", powerRight));
+        telemetry.addData("flywheelpower", "flywheelpower:  " + String.format("%.2f", flyWheelPower));
+        //telemetry.addData("powerup", "powerup:  " + String.format("%.2f", powerUp));
     }
 
     public void stop()
