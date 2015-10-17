@@ -15,6 +15,6 @@ public class SimpleDriveReverse extends RobotMain{
         leftTopDrive.setPower(-1.0);
         leftBottomDrive.setPower(-1.0);
         */
-        setDrivePower(-1.0, -1.0);
+        setDrivePower(-0.5, -0.5);
     }
 }

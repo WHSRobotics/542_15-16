@@ -16,7 +16,12 @@ public class SimpleDrive extends RobotMain{
         leftTopDrive.setPower(1.0);
         leftBottomDrive.setPower(1.0);
         */
-        setDrivePower(1.0, 1.0);
+
+        double rightDrivePower = -gamepad1.right_stick_y;
+        double leftDrivePower = -gamepad1.left_stick_y;
+
+        setDrivePower(rightDrivePower, leftDrivePower);
         //setDrivePower(rightDrivePower, leftDrivePower);
     }
 }
+
