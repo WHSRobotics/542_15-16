@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/exploded-aar/Hardware-release/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="16efc4540aa5ac1cce5fde6c57edc09f5bc12e92">
+        <dex dex="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/pre-dexed/debug/classes-ba377f107cad72b672783dd4dc0b8667a76b1a67.jar" />
+    </item>
+    <item
+        jar="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/exploded-aar/RobotCore-release/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a5fadb0dbb392372142275356999752343e21148">
+        <dex dex="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/pre-dexed/debug/classes-27117721b690144c6576386fccba0f6225d46bdb.jar" />
+    </item>
+    <item
+        jar="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/exploded-aar/FtcCommon-release/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="37738feb62fd1abd7395899609373e990483750f">
+        <dex dex="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/pre-dexed/debug/classes-340ba5cb1978563ad1a7219542687be0dffe01b3.jar" />
+    </item>
+    <item
+        jar="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/exploded-aar/ModernRobotics-release/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="f71d91f91744fdbed74e2bf39f91268d1580cefc">
+        <dex dex="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/pre-dexed/debug/classes-2352fbfa398c47228a685e6a592a216c8a42562a.jar" />
+    </item>
+    <item
+        jar="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/exploded-aar/Analytics-release/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="23c74caa2b901107adc4d0aec343c5b8e8be86fb">
+        <dex dex="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/pre-dexed/debug/classes-1d1d214066637ced39aefe6969895ea45be5d88d.jar" />
+    </item>
+    <item
+        jar="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/exploded-aar/WirelessP2p-release/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ebf8372b5bc9dc9f596ed438df36481099d51c41">
+        <dex dex="/Users/DanielWang/Documents/ftc_app-master/FtcRobotController/build/intermediates/pre-dexed/debug/classes-4eb97edbbaff4b37060cae8ae585c1cff0568ad4.jar" />
+    </item>
+
+</items>
